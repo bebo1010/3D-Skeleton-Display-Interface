@@ -1,0 +1,66 @@
+name: PR Checks without Testing
+on:
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  run-tests:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run:
+          echo "Hello World!"
+
+  all-checks-passed:
+    name: All Checks Passed
+    if: always()
+    needs: run-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure all required jobs pass successfully
+        uses: re-actors/alls-green@release/v1
+        with:
+          jobs: ${{ toJSON(needs) }}
+
+  auto-merge:
+    name: Auto-Merge Admin PR After All Checks Passed
+    if: success()
+    needs: all-checks-passed
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check permissions
+        id: check-permissions
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          response=$(gh api repos/${{ github.repository }}/collaborators/${{ github.actor }}/permission)
+          role=$(echo "$response" | jq -r '.role_name')
+          if [[ "$role" == "admin" ]]; then
+            echo "authorized=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "authorized=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create github app token
+        id: app-token
+        if: steps.check-permissions.outputs.authorized == 'true'
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.AUTO_MERGE_BOT_APP_ID }}
+          private-key: ${{ secrets.AUTO_MERGE_BOT_PRIVATE_KEY }}
+
+      - name: Approve and squash the pull request
+        if: steps.check-permissions.outputs.authorized == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_URL: ${{github.event.pull_request.html_url}}
+        run: |
+          gh pr review --approve "$PR_URL"
+          gh pr comment "$PR_URL" -b "Well done 👍"
+          gh pr merge --admin -s "$PR_URL"
