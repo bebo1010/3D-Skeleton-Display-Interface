@@ -1,8 +1,34 @@
-# Template-with-Auto-Merge-settings
-Repository template with basic settings all done for auto merge
+# 3D Skeleton Display Interface
 
-Feel free to fork it and reuse this repository template.
-If you want to use this, remember to update `AUTO_MERGE_BOT_PRIVATE_KEY` and `AUTO_MERGE_BOT_APP_ID`.
+## Environment Setup
 
-For workflow `.yaml`, modify `run-test` to suit your application.
-Remember to modify `username` in line 33 to your username
+1. Install Python `version`.
+2. Install the required packages:
+    ```bash
+    pip install .
+    ```
+3. Run program
+    TBA
+
+> [!WARNING]
+> Need to update python version and package version
+> Remember to update in `pyproject.toml` and `PR_check_with_linting_and_unit_tests.yml`
+
+## Functionality
+
+## Goal
+
+### First Step
+- [ ] Display 3D Skeleton on PyQt5 user Interface
+    - [ ] Initialize `QWidget` instance with `vispy` canvas
+    - [ ] Input `Polars` dataframe
+    - [ ] Process the data to draw on canvas
+    - [ ] Update Frame
+
+- [ ] Update `python` and all package versions
+    - [ ] include how to set up other external applications
+
+### Next Step
+- [ ] Allows different kinds of data format
+    - [ ] write method for 17 points
+    - [ ] write method for 26 points
