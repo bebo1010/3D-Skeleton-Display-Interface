@@ -39,13 +39,12 @@ version = "0.0.0"
 description = """
 This project includes a class to draw 3D Skeleton on PyQt5 user interface with vispy package.
 """
-
 dependencies = [
-    "polars",
-    "vispy",
-    "PyQt5",
-    "PyQt5-Qt5",
-    "PyQt5_sip"
+    "polars==1.8.2",
+    "vispy==0.14.2",
+    "PyQt5==5.15.11",
+    "PyQt5-Qt5==5.15.2",
+    "PyQt5_sip==12.15.0"
 ]
 # <package name>==<version>
 
