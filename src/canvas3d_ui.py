@@ -11,14 +11,29 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_canvas_3d_view(object):
-    def setupUi(self, canvas_3d_view):
-        canvas_3d_view.setObjectName("canvas_3d_view")
-        canvas_3d_view.resize(400, 300)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(800, 600)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.canvas3d_view = QtWidgets.QWidget(self.centralwidget)
+        self.canvas3d_view.setObjectName("canvas3d_view")
+        self.verticalLayout.addWidget(self.canvas3d_view)
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 18))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(canvas_3d_view)
-        QtCore.QMetaObject.connectSlotsByName(canvas_3d_view)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, canvas_3d_view):
+    def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        canvas_3d_view.setWindowTitle(_translate("canvas_3d_view", "Form"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))

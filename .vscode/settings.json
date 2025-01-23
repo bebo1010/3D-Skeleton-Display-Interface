@@ -3,7 +3,7 @@
     "pylint.args": ["--max-line-length=120",
                     "--disable=E1101,E0611,E0401,E0633,R0801",
                     "--max-args=10",
-                    "--max-locals=30",
+                    "--max-locals=3",
                     "--max-attribute=15"],
     "python.testing.unittestEnabled": true,
     "python.testing.pytestEnabled": false,
